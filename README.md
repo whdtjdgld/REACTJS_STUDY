@@ -1,5 +1,9 @@
 REACT JS
 
+개발환경 : vscode
+
+Day1 Commit
+
 왜 node js? create-react-app 라이브러리때문에
 
 글면 npx npm 툴 이용가능
@@ -111,6 +115,8 @@ deepcopy (완전복사 참조 말고)하는 경우
 var newArray = [...글제목];
 
 ###########################################################
+
+Day2 Commit
 
 html을 깔끔하게! 컴포넌트 사용 (반복 출현하는애들 자주 변경되는애들 추천 django에서 {% for%}비슷 )
 
