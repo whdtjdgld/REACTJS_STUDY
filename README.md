@@ -295,13 +295,13 @@ npm react-router-dom 설치
 
 import {BrowserRouter, Route, Switch } from "react-router-dom";
 
-<BrowswerRouter> return 전체 감싸기
+BrowswerRouter return 전체 감싸기
   
-<Switch> 내부는 url에 따라 각자 다른 페이지 보여줄거임
+Switch 내부는 url에 따라 각자 다른 페이지 보여줄거임
   
-<Switch> 외부는 모든페이지에 비춰질 base.html같은거
+Switch 외부는 모든페이지에 비춰질 base.html같은거
   
-<Route> urls.py 거는거랑 비슷함 href, onclick="location=''" 작동 똑같다
+Route urls.py 거는거랑 비슷함 href, onclick="location=''" 작동 똑같다
   
 시작페이지 보여주는게 localhost~3000/ 라면
   
