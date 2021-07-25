@@ -256,9 +256,74 @@ export default function Hello({date}){ ## {date}로 받아서 사용해도 된�
     
     )
     
-}
+} 
+
+###################################################
+
+Day 3 영어단어암기 페이지 만들기 시작 - map반복문, 라우터 
+
+map() 반복문 & dummy 변수 바인딩
+
+data.json : 더미변수 만든거
+
+dummy로 임의지정하여 import 하고 안에 파라미터를 .을 통해 사용
+
+{dummy.days.map(day => ( ~~~~반복 돌릴 html  ) ) }
+
+파이썬 for day in days랑 같은거라 보면됨
+
+{wordList.map(word => (
+
+                <tr key={word.id}>    // key= 아마 PK지않을까 생각
+                    <td>
+                        {word.eng}
+                    </td>
+                    <td>
+                        {word.kor}
+                    </td>
+                </tr>
+                ))}
+              
+위 구간을 반복한다
 
 
+#####################################################
+
+라우터 구현 react-router-dom
+
+npm react-router-dom 설치
+
+import {BrowserRouter, Route, Switch } from "react-router-dom";
+
+<BrowswerRouter> return 전체 감싸기
+  
+<Switch> 내부는 url에 따라 각자 다른 페이지 보여줄거임
+  
+<Switch> 외부는 모든페이지에 비춰질 base.html같은거
+  
+<Route> urls.py 거는거랑 비슷함 href, onclick="location=''" 작동 똑같다
+  
+시작페이지 보여주는게 localhost~3000/ 라면
+  
+exact 붙여줘야함 안그러면 url이 /day가 되더라도 /로감
+  
+html에서는 href사용 but react에서는 <Link to> 사용
+  
+Route path ="/day/:day" : 주소가 /day/1이면 day의 1에 해당하는걸 가져옴 =>
+  
+다이나믹한 변경을 위해 사용
+  
+console.log(); 해서 잘 들어오는지 확인해보길 바람 콘솔확인결과 : {day: 1}
+  
+useParams를 쓰면 주소로 들어오는 값을 파라미터로 쓰겠다는거임!
+  
+ex) /day/1   ==  
+  
+const {day} = useParams(); 여기에 1이 들어가는거
+
+필터거는법 lambda 쓰임 스칼라 쓰는거랑 비슷하네
+  
+const wordList = dummy.words.filter(word => word.day === Number(day));
 
 
 
@@ -282,6 +347,5 @@ let은 변수에 재할당이 가능하지만,
 
 const는 변수 재선언, 재할당 모두 불가능하다.
 
-###################################################################
+Number(day) 쓰고자 하는 변수가 숫자일 경우 toInt하는법임
 
-Day3 Commit 예정 (웹페이지 만들어보기)
