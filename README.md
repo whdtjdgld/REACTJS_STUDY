@@ -325,7 +325,168 @@ const {day} = useParams(); 여기에 1이 들어가는거
   
 const wordList = dummy.words.filter(word => word.day === Number(day));
 
+#############################################
+json api 구축
 
+Day.js에서 word에 대한 usestate쓰려면 어렵기 때메 word.js 하나 더 해서 usestate 운용
+  
+jsonserver는 빠르고 쉽게 restapi 구축 작은 프로젝트, 프로토타입위해서 씀
+  
+** 이거 cmd 창으로 돌린다음에 하셈 powershell 안먹어요
+  
+npm install -g json-server
+  
+json-server --watch ./src/db/data.json --port 3001 (3000은 사용중)
+  
+localhost:3001/days, words
+  
+REST API CRUD
+  
+Create : POST
+  
+Read : GET, ?
+  
+Update : PUT
+  
+Delete : DELETE
+  
+
+###########################################
+
+useEffect, fetch()로 API호출
+  
+useEffect 랜더링이 되고 api를호출한다
+  
+상태값이 바꼈을때 동작하는 함수 작성
+  
+useEffect(()=> {
+  
+	fetch( api주소) # `http://localhost:3001/words?day=${day}` 프로미스 반환
+  
+		          words 안에 day가 ${day} 인 거만 가져와 GET방식으로 가져오는거
+  
+	.then(res =>{  # 여기서 res는 http연결이지 json이 아님
+  
+		return res.json()
+  
+		})
+  
+		.then(data => {
+  
+		setDays{data};
+  
+		})
+  
+}, [ ]); ## [ ]는 랜더링후 한번만 실행하라고
+
+custom hooks도 만들수있당
+  
+useFetch.js 하나 더만들어서 useEffect useState만 사용해서 url만 props로 데려오면 됨
+  
+const words = useFetch(`http://localhost:3001/words?day=${day}`)
+  
+그러면 api들은 function useFetct(url) 에 url만 넣으면 다동작함 하나만 만들어놔도 개꿀이네
+  
+각 컴포넌트들마다 useEffect fetch 붙일 필요없다는 말씀
+
+##############################################
+
+api CRUD중 U D
+  
+isDone 업데이트
+  
+Word.js
+  
+    function toggleDone(){
+  
+            fetch(`http://localhost:3001/words/${word.id}`,
+  
+            {
+  
+            method:"PUT", ## update할때
+  
+            headers: {
+  
+                "Content-Type": "application/json",
+  
+                },
+  
+            body: JSON.stringify({
+  
+                ...word,  ## word 전체
+  
+                isDone: !isDone,
+  
+            }),
+  
+            })
+  
+            .then(res => {
+  
+                if(res.ok){ # 응답이 ok면 반대로해라
+  
+                    setIsDone(!isDone)
+  
+                }
+  
+            });
+  
+        }
+
+word Delete
+  
+props를 {word: w}로 받으면 w를 새로 선언하는거랑 같음
+  
+function del(){
+  
+        if(window.confirm("삭제하시겠습니까?")){
+  
+            fetch(`http://localhost:3001/words/${word.id}`,
+  
+            {
+  
+            method:"DELETE", ## 여기까지만하면 재랜더링이 안된다 삭제하면 그자리에서 안사라지고 새로고침해야함
+  
+            }).then(res =>{
+  
+                if(res.ok){
+  
+                    setWord({id:0}); ## 삭제된거는 id를 0으로 만들어라
+  
+                }
+  
+            })
+  
+        }
+  
+    }
+  
+    if(word.id ===0) { ## id가 0이면 null 표현
+  
+        return null;
+    }
+
+######################################################
+
+api CRUD중 C
+  
+단어추가시 form 태그에 onsubmit={실행 함수}
+  
+useFetch로 데이터 불러오기
+  
+useRef 훅 사용 DOM(focus, 스크롤위치확인)에 접근하게 해준다
+  
+console.log(~.current.value) 최근 값이 무엇인지 f12 콘솔창에 알려준다
+  
+중간에 확인용도로 사용할것
+
+put할때 썼던 로직사용
+
+useHistory 훅 alert창 본 후 바로 day에 맞는 word 페이지로 넘어가게
+
+create day도 마찬가지 
+  
+days api 받아와서 post형식 day : days.length + 1
 
 ###########################
 
